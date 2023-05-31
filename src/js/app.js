@@ -15,8 +15,8 @@ import "../style/index.css";
         linkedin: null,
         instagram: null,
 
-        name: null,
-        lastname: null,
+        name: OK,
+        lastname: OK,
         role: null,
         country: null,
         city: null
@@ -27,20 +27,56 @@ function render(variables = {}) {
   // here we ask the logical questions to make decisions on how to build the html
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
-  if (variables.includeCover == false) cover = "<div class='cover'></div>";
+  let fullName = `<h1>${variables.name} ${variables.lastname}</h1>`;
+  if (variables.name == null && variables.lastname == null) {
+    fullName = "<h1>Lucy Boilet</h1>";
+  } else if (variables.includeCover == false) {
+    cover = "<div class='cover'></div>";
+  } else if (variables.lastname == null) {
+    fullName = `<h1>${variables.name} Boilet</h1>`;
+  } else if (variables.name == null) {
+    fullName = `<h1>Lucy ${variables.lastname}</h1>`;
+  }
+  let github = `<a href="https://github.com/${variables.github}"><i class="fa-brands fa-github"></i></a>`;
+  if (variables.github == null) {
+    github = `<a href="https://github.com/"><i class="fa-brands fa-github"></i></a>`;
+  }
+  let twitter = `<a href="https://twitter.com/${variables.twitter}"><i class="fa-brands fa-square-twitter"></i></i></a>`;
+  if (variables.twitter == null) {
+    twitter = `<a href="https://twitter.com/"><i class="fa-brands fa-square-twitter"></i></a>`;
+  }
+  let linkedin = `href="https://linkedin.com/${variables.linkedin}"`;
+  if (variables.linkedin == null) {
+    linkedin = `href="https://linkedin.com/"`;
+  }
+  let instagram = `href="https://instagram.com/${variables.instagram}"`;
+  if (variables.instagram == null) {
+    instagram = `href="https://instagram.com/"`;
+  }
+  let socialMediaPosition = variables.socialMediaPosition;
+  let smClass = "";
+  if (socialMediaPosition == "position-left") {
+    smClass = `class="position-left"`;
+  } else if (socialMediaPosition == "position-right") {
+    smClass = `class="position-right"`;
+  }
+  let position = variables.role;
+  if (position == null) {
+    position = "Freelance";
+  }
 
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
+          <h1>${fullName}</h1>
+          <h2>${position}</h2>
           <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <ul ${smClass}>
+            <li>${twitter}</li>
+            <li>${github}</li>
+            <li><a ${linkedin}><i class="fa-brands fa-linkedin"></i></a></li>
+            <li><a ${instagram}><i class="fa-brands fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
@@ -61,7 +97,7 @@ window.onload = function() {
     socialMediaPosition: "position-left",
     // social media usernames
     twitter: null,
-    github: "alesanchezr",
+    github: null,
     linkedin: null,
     instagram: null,
     name: null,
