@@ -64,6 +64,33 @@ function render(variables = {}) {
   if (position == null) {
     position = "Freelance";
   }
+  let city = variables.city;
+  let country = variables.country;
+  let location = "";
+  if (city == null) {
+    location = country;
+  }
+  if (city == null && country == null) {
+    location = "Around the World";
+  }
+  switch (city) {
+    case "Miami":
+      country = "USA";
+      location = `${city}, ${country}`;
+      break;
+    case "Munich":
+      country = "Germany";
+      location = `${city}, ${country}`;
+      break;
+    case "Caracas":
+      country = "Venezuela";
+      location = `${city}, ${country}`;
+      break;
+    case "Toronto":
+      country = "Canada";
+      location = `${city}, ${country}`;
+      break;
+  }
 
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
@@ -71,7 +98,7 @@ function render(variables = {}) {
           <img src="${variables.avatarURL}" class="photo" />
           <h1>${fullName}</h1>
           <h2>${position}</h2>
-          <h3>Miami, USA</h3>
+          <h3>${location}</h3>
           <ul ${smClass}>
             <li>${twitter}</li>
             <li>${github}</li>
